@@ -36,7 +36,7 @@ describe('ContactController', () => {
 
     const foundContact = await ContactModel.find({ firstName });
     expect(foundContact).toHaveLength(1);
-    expect(foundContact.lastName).toBe('test');
+    expect(foundContact[0].lastName).toBe('test2');
 
     done();
   });
