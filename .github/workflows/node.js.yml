@@ -11,7 +11,7 @@ on:
     
 defaults:
   run: 
-    working-directory: API
+    working-directory: api
     
 jobs:
   build:
