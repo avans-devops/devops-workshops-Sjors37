@@ -21,7 +21,7 @@ services:
         container_name: api
         build: ./api
         ports:
-            - 3000:3000
+            - 5000:5000
         networks:
             - default
         environment: 
@@ -43,5 +43,24 @@ services:
             - api
         networks:
             - default
+    prometheus:
+        image: prom/prometheus:latest
+        volumes:
+            - ./prometheus:/etc/prometheus
+            - ./prometheus-data:/prometheus
+        ports:
+            - 9090:9090
+        command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    db-exporter:
+        image: bitnami/mongodb-exporter:0.11
+        environment:
+            -  MONGODB_URI=mongodb://db:27017
+        restart: always
+        ports: 
+            -  9216:9216
+    grafana:
+        build: ./grafana
+        ports:
+            - '3000:3000'
 networks: 
     default:

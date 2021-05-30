@@ -15,9 +15,21 @@ const mongoose = require('mongoose');
 
 const environment = require('./config/environment');
 
+const promBundle = require("express-prom-bundle");
+const metricsMiddleware = promBundle({
+  includePath: true,
+  includeStatusCode: true,
+  normalizePath: true,
+  promClient: {
+    collectDefaultMetrics: {}
+  }
+})
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(metricsMiddleware);
 
 // Connect to Mongoose and set connection variable
 // MongoDB connection
